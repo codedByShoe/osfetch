@@ -4,6 +4,7 @@ import re
 import socket
 import subprocess
 from datetime import datetime
+from typing import Any, Literal
 
 import distro
 from cpuinfo import get_cpu_info
@@ -85,7 +86,7 @@ def get_packages() -> str:
         return "N/A"
 
 
-def get_os():
+def get_os() -> str:
     return distro.name(pretty=True)
 
 
@@ -105,25 +106,25 @@ def get_gpu():
         return "N/A"
 
 
-def get_cpu():
+def get_cpu() -> Any | Literal["N/A"]:
     info = get_cpu_info()
     cpu = info["brand_raw"]
     return cpu if cpu else "N/A"
 
 
-def get_ram():
+def get_ram() -> str:
     return f"{round(psutil.virtual_memory().total / (1024 ** 3), 2)}Gib"
 
 
-def get_host():
+def get_host() -> str:
     return socket.gethostname()
 
 
-def get_kernel():
+def get_kernel() -> str:
     return platform.release()
 
 
-def main():
+def main() -> None:
     console = Console()
     os_info = get_os()
     host = get_host()
